@@ -1,0 +1,1 @@
+/mnt/hwfile/optimal/LLMComp-Neurips2024/EdgeDeviceLLMCompetition-Starting-Kit/opencompass/configs/eval_crazylm_1_5b.py

@@ -1,16 +1,13 @@
 set -x
 
+OUR_MODEL=true
+OUR_MODEL_PATH=/mnt/petrelfs/songhaoming/projs/LLMComp-Neurips2024/crazylm/outputs/crazylm_v2_0_pretrain/2024-08-26/18-33-59_en+zh_tf32_warmup0.01_linear_lr5e-5_bs8_ga1_node1_gpu8/checkpoint-285000
 models=(
-  "internlm2-chat-1_8b"
-  "chatglm3-6b"
-  "internlm2-chat-1_8b"
-  "internlm2-chat-7b"
-  "Nanbeige2-8B-Chat"
-  "Phi-3-medium-128k-instruct"
-  "Qwen1.5-7B-Chat"
-  "Qwen2-7B"
-  "Yi-1.5-6B-Chat" 
-  "Yi-1.5-9B-Chat"
+  # "Qwen2-0.5B"
+  # "Qwen2-0.5B-Instruct"
+  # "Qwen2-1.5B"
+  # "Qwen2-1.5B-Instruct"
+  "CrazyLM-1.5B-v1"
 )
 
 PARTITION=${PARTITION:-"optimal"}
@@ -27,7 +24,14 @@ do
   date_dir=$(date "+%Y-%m-%d")
   OUTPUT_DIR=outputs/mm/${model_name}/${note:+_$note}/${date_dir}
   mkdir -p ${OUTPUT_DIR}
-  model_path=/mnt/hwfile/optimal/LLMComp-Neurips2024/crazylm/pretrained/${model_name}
+
+  if [ "$OUR_MODEL" = true]; then
+    model_path=${OUR_MODEL_PATH}
+  else
+    model_path=/mnt/hwfile/optimal/LLMComp-Neurips2024/crazylm/pretrained/${model_name}
+  fi
+
+
   note=
 
   sbatch -p ${PARTITION} \

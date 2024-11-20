@@ -121,6 +121,10 @@ def parse_args():
         'correctness of each sample, bpb, etc.',
         action='store_true',
     )
+    parser.add_argument('--ckpt-path',
+                        help='checkpoint path',
+                        default=None,
+                        type=str)
     # set srun args
     slurm_parser = parser.add_argument_group('slurm_args')
     parse_slurm_args(slurm_parser)

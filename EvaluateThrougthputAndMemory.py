@@ -1,9 +1,10 @@
 import os
-os.environ['HF_DATASETS_CACHE'] = '/scratch-shared/'
-os.environ['HF_TOKENIZERS_CACHE'] = '/scratch-shared/tokenizes'
-os.environ['HF_HOME'] = '/scratch-shared/HF_HOME'
-os.environ['HF_METRICS_CACHE'] = '/scratch-shared/metrics'
-os.environ['HF_MODULES_CACHE'] = '/scratch-shared/modules'
+os.environ['HF_DATASETS_CACHE'] = '/mnt/hwfile/optimal/LLMComp-Neurips2024/hf_cache'
+os.environ['HF_TOKENIZERS_CACHE'] = '/mnt/hwfile/optimal/LLMComp-Neurips2024/hf_cache/tokenizes'
+os.environ['HF_HOME'] = '/mnt/hwfile/optimal/LLMComp-Neurips2024/hf_cache/HF_HOME'
+os.environ['HF_METRICS_CACHE'] = '/mnt/hwfile/optimal/LLMComp-Neurips2024/hf_cache/metrics'
+os.environ['HF_MODULES_CACHE'] = '/mnt/hwfile/optimal/LLMComp-Neurips2024/hf_cache/modules'
+
 import subprocess
 import time
 import torch
@@ -20,8 +21,8 @@ parser.add_argument('--num_repeats', type=int, default=500, help="Number of time
 args = parser.parse_args()
 
 # Load the model and tokenizer
-model = AutoModelForCausalLM.from_pretrained(args.model_name).cuda()
-tokenizer = AutoTokenizer.from_pretrained(args.model_name)
+model = AutoModelForCausalLM.from_pretrained(args.model_name, trust_remote_code=True).cuda()
+tokenizer = AutoTokenizer.from_pretrained(args.model_name, trust_remote_code=True)
 
 # Add padding token if not present
 if tokenizer.pad_token is None:

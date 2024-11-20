@@ -81,6 +81,13 @@ def get_config_from_arg(args) -> Config:
     if args.config:
         config = Config.fromfile(args.config, format_python_code=False)
         config = try_fill_in_custom_cfgs(config)
+        
+        # custom replace with args.ckpt_path
+        for i, model in enumerate(config['models']): 
+            if args.ckpt_path: 
+                print(f"*** replace mode config {config['models'][i]['path']} with {args.ckpt_path} ***")
+                config['models'][i]['path'] = args.ckpt_path
+                
         # set infer accelerator if needed
         if args.accelerator in ['vllm', 'lmdeploy']:
             config['models'] = change_accelerator(config['models'], args.accelerator)

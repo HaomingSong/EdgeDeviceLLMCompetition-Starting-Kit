@@ -1,7 +1,7 @@
 set -x
 
 PARTITION=${PARTITION:-"optimal"}
-GPUS_PER_NODE=${GPUS_PER_NODE:-2}
+GPUS_PER_NODE=${GPUS_PER_NODE:-1}
 QUOTA_TYPE=${QUOTA_TYPE:-"reserved"}
 CPUS_PER_TASK=${CPUS_PER_TASK:-10}
 SRUN_ARGS=${SRUN_ARGS:-""}
@@ -23,9 +23,6 @@ sbatch -p ${PARTITION} \
   --quotatype=${QUOTA_TYPE} \
   ${SRUN_ARGS} \
   --wrap="cd opencompass && \
-    python run.py configs/crazy_llm.py \
-    --batch-size 16 \
-    --hf-num-gpus ${GPUS_PER_NODE} \
+    python run.py /mnt/hwfile/optimal/LLMComp-Neurips2024/crazylm/crazy_llm.py \
     --debug \
     -l"
-
